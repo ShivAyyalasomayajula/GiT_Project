@@ -1,0 +1,13 @@
+select count(*) , passenger_count
+ from green_taxi_data
+ where  lpep_pickup_datetime >=timestamp '2019-01-01 00:00:00'
+ and lpep_pickup_datetime < timestamp '2019-01-02 00:00:00'
+ group by passenger_count
+ having (passenger_count =2 or passenger_count =3);
+ +-------+-----------------+
+ | count | passenger_count |
+ |-------+-----------------|
+ | 1282  | 2               |
+ | 254   | 3               |
++-------+-----------------+
+

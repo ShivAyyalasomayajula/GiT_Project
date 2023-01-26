@@ -1,0 +1,16 @@
+select max(gtd.tip_amount),gtd."DOLocationID",zd."LocationID",zd."Zone"
+ from green_taxi_data gtd,zones zd, zones zp
+ where gtd."DOLocationID"=zd."LocationID"
+ and gtd."PULocationID"=zp."LocationID"
+ and zp."Zone"='Astoria'
+ group by gtd."DOLocationID",zd."LocationID",zd."Zone",gtd.tip_amount 
+ order by gtd.tip_amount desc;
+The result was limited to 1000 rows
++-------+--------------+------------+--------------------------------+
+| max   | DOLocationID | LocationID | Zone                           |
+|-------+--------------+------------+--------------------------------|
+| 88.0  | 146          | 146        | Long Island City/Queens Plaza  |
+| 30.0  | 43           | 43         | Central Park                   |
+| 25.0  | 130          | 130        | Jamaica                        |
+| 25.0  | 265          | 265        | <null>                         |
+| 19.16 | 265          | 265        | <null>                         |

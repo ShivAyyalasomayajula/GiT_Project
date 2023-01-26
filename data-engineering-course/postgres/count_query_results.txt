@@ -1,0 +1,11 @@
+root@localhost:ny_taxi> select count(*) from green_taxi_data where lpep_pickup_d
+ atetime >= timestamp'2019-01-15 00:00:00' and lpep_dropoff_datetime < timestamp
+ '2019-01-16 00:00:00' ;
++-------+
+| count |
+|-------|
+| 20530 |
++-------+
+
+
+
