@@ -1,0 +1,33 @@
+-- count returns 43244696 rows
+select count(*) 
+from `formal-scout-375008.sa_de_zoomcamp.fhv_rides`;
+
+-- Query scans 317.94 MB
+SELECT distinct(affiliated_base_number ) FROM `formal-scout-375008.sa_de_zoomcamp.fhv_rides` LIMIT 1000; 
+
+
+-- Query scans 0 MB
+SELECT distinct(affiliated_base_number ) FROM `formal-scout-375008.sa_de_zoomcamp.external_fhv_rides` LIMIT 1000; 
+
+-- Count returns 717748 rows
+select count(*) 
+from `formal-scout-375008.sa_de_zoomcamp.fhv_rides`
+where PUlocationID is null
+and DOlocationID is null; -- 
+
+-- Creating a partition and cluster table
+CREATE OR REPLACE TABLE `formal-scout-375008.sa_de_zoomcamp.fhv_rides_partitoned_clustered`
+PARTITION BY DATE(pickup_datetime)
+CLUSTER BY affiliated_base_number AS
+SELECT * FROM `formal-scout-375008.sa_de_zoomcamp.external_fhv_rides`;
+
+
+-- Query scans 285.21 MB
+SELECT distinct(affiliated_base_number) 
+FROM  `formal-scout-375008.sa_de_zoomcamp.fhv_rides_partitoned_clustered`
+WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' AND '2020-03-31';
+
+ --Query will scan 647.87
+select distinct(affiliated_base_number) 
+from `formal-scout-375008.sa_de_zoomcamp.fhv_rides`
+WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' AND '2020-03-31';
